@@ -1,0 +1,22 @@
+[
+  {
+    "name": ".NET Core",
+    "url": "https://en.wikipedia.org/wiki/ASP.NET_Core"
+  },
+  {
+    "name": "C-sharp",
+    "url": "https://en.wikipedia.org/wiki/C_Sharp_(programming_language)"
+  },
+  {
+    "name": "Angular",
+    "url": "https://angular.dev/"
+  },
+  {
+    "name": "TypeScript",
+    "url": "https://www.typescriptlang.org/"
+  },
+  {
+    "name": "Node JS",
+    "url": "https://nodejs.org/en/about"
+  }
+]
