@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CharacterService } from '@core/services/character.service';
 import { EpisodeService } from '@core/services/episode.service';
 import { error } from 'console';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @Component({
   selector: 'app-episode-detail',
@@ -38,7 +39,7 @@ import { error } from 'console';
         >
           <div class="flex flex-col items-center border-solid border-2 border-gray-700 hover:border-gray-500" routerLink="/character/{{ item.id }}">
             <div class="bg-gray-100 dark:bg-gray-800 rounded-sm p-2.5">
-              <img class="w-full h-auto" src="{{ item.image }}" alt="character" />
+              <img class="w-full h-auto" [lazyLoad]="item.image" alt="character" />
             </div>
             <div class="pl-3 w-full text-center">
               <p class="text-xl md:text-2xl font-semibold text-gray-800 dark:text-white">
@@ -182,7 +183,7 @@ import { error } from 'console';
       </div>
     </div> -->
   `,
-  imports: [NgIf, NgFor, RouterLink],
+  imports: [NgIf, NgFor, RouterLink,LazyLoadImageModule],
   providers: [EpisodeService, CharacterService],
 })
 export class EpisodeDetailArea implements OnInit {

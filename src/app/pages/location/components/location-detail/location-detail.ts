@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CharacterService } from '@core/services/character.service';
 import { LocationService } from '@core/services/location.service';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { log } from 'node:console';
 
 @Component({
@@ -37,7 +38,7 @@ import { log } from 'node:console';
         >
           <div class="flex flex-col items-center border-solid border-2 border-gray-700 hover:border-gray-500" routerLink="/character/{{ item.id }}">
             <div class="bg-gray-100 dark:bg-gray-800 rounded-sm p-2.5">
-              <img class="w-full h-auto" src="{{ item.image }}" alt="{{item.name}}_img" />
+              <img class="w-full h-auto" [lazyLoad]="item.image" alt="{{item.name}}_img" />
             </div>
             <div class="pl-3 w-full text-center">
               <p class="text-xl md:text-2xl font-semibold text-gray-800 dark:text-white">
@@ -180,7 +181,7 @@ import { log } from 'node:console';
       <!-- </div>
     </div> -->
   `,
-  imports: [NgIf, NgFor, RouterLink],
+  imports: [NgIf, NgFor, RouterLink,LazyLoadImageModule],
   providers: [LocationService, CharacterService],
 })
 export class LocationDetailArea implements OnInit {

@@ -1,8 +1,9 @@
 import { ApplicationConfig } from '@angular/core';
 import { PreloadAllModules, provideRouter, withPreloading, withViewTransitions, withInMemoryScrolling } from '@angular/router';
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import {httpErrorHandlerInterceptor} from '@core/services/http-error-handler.interceptor'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,5 +13,7 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({
       scrollPositionRestoration: 'enabled',
     })
-  )]
+  ),
+  provideHttpClient(withInterceptors([httpErrorHandlerInterceptor]))
+],
 };

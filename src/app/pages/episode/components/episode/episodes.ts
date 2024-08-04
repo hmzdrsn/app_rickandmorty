@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { EpisodeService } from '@app/core/services/episode.service';
 import { SpotlightDirective } from '@pages/home/components/character/directive/spotlight.directive';
 import { Icon } from '@shared/components/icon/icon';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { NgxPaginationModule } from 'ngx-pagination';
 @Component({
   selector: 'app-episode',
   standalone: true,
-  imports:[Icon, SpotlightDirective, NgFor, NgIf, RouterLink, NgTemplateOutlet, NgxPaginationModule],
+  imports:[Icon, SpotlightDirective, NgFor, NgIf, RouterLink, NgTemplateOutlet, NgxPaginationModule,LazyLoadImageModule],
   template:`
   
 <form class="max-w-sm mx-auto">
@@ -22,8 +23,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     <section class="mt-16">
       <div class="max-w-screen-xl grid gap-6 md:grid-cols-3 lg:grid-cols-3 items-start group" spot-light>
     <div *ngFor="let item of selectedEpisodes">
-
-        <div routerLink="{{item.id}}" 
+@defer(){
+  <div routerLink="{{item.id}}" 
           class="border border-gray-200 dark:border-gray-700  relative h-full dark:bg-slate-800 bg-white rounded-3xl 
           p-px before:absolute before:w-80 before:h-80 before:-left-40 before:-top-40 before:bg-primary before:rounded-full 
           before:opacity-0 before:pointer-events-none before:transition-opacity before:duration-500 before:translate-x-[var(--mouse-x)] s
@@ -36,7 +37,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
               <div class="absolute inset-0  dark:bg-slate-800 bg-white rounded-full blur-[80px] translate-z-0"></div>
             </div>
             <div class="flex flex-col gap-3 text-center">
-               <img src='{{item.image}}' alt="">
+               <img [lazyLoad]="item.image" alt="">
               <span class="text-xl font-semibold dark:text-white">{{item.name}}</span>
               
               <!-- <div class="flex items-center">
@@ -50,6 +51,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
             </div>
           </div>
         </div>
+}
+        @loading {
+          <a class="dark:text-white">Loading...</a>
+        }
     </div>
   
   

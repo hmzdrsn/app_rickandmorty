@@ -3,10 +3,11 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {LocationService} from '../../../../core/services/location.service'
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 @Component({
   selector: 'app-location',
   standalone: true,
-  imports:[NgFor, NgIf, RouterLink, NgTemplateOutlet, NgxPaginationModule],
+  imports:[NgFor, NgIf, RouterLink, NgTemplateOutlet, NgxPaginationModule,LazyLoadImageModule],
   template:`
   <pagination-template #p="paginationApi"(pageChange)="pageNumber = $event">
 <nav aria-label="Page navigation example" class="flex items-center justify-center">
@@ -53,8 +54,8 @@ import {LocationService} from '../../../../core/services/location.service'
     <section class="mt-16">
       <div class="max-w-screen-xl grid gap-6 md:grid-cols-3 lg:grid-cols-3 items-start group" spot-light>
     <div *ngFor="let item of location | paginate: { itemsPerPage: 9, currentPage: pageNumber }">
-
-        <div routerLink="{{item.id}}" 
+@defer(){
+  <div routerLink="{{item.id}}" 
           class="border border-gray-200 dark:border-gray-700  relative h-full dark:bg-slate-800 bg-white rounded-3xl 
           p-px before:absolute before:w-80 before:h-80 before:-left-40 before:-top-40 before:bg-primary before:rounded-full 
           before:opacity-0 before:pointer-events-none before:transition-opacity before:duration-500 before:translate-x-[var(--mouse-x)] s
@@ -67,7 +68,7 @@ import {LocationService} from '../../../../core/services/location.service'
               <div class="absolute inset-0  dark:bg-slate-800 bg-white rounded-full blur-[80px] translate-z-0"></div>
             </div>
             <div class="flex flex-col gap-3 text-center">
-               <img src='{{item.image}}' alt="">
+               <img [lazyLoad]="item.image" alt="">
               <span class="text-xl font-semibold dark:text-white">{{item.name}}</span>
               
               <!-- <div class="flex items-center">
@@ -81,6 +82,11 @@ import {LocationService} from '../../../../core/services/location.service'
             </div>
           </div>
         </div>
+}
+@loading {
+  <a class="dark:text-white">Loading...</a>
+}
+        
     </div>
   
   `,
